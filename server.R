@@ -1,12 +1,12 @@
-load("dds.rdata")
 library(shiny)
-library(DESeq2)
 library(ggplot2)
-options(repos = BiocInstaller::biocinstallRepos())
+
+counts <- readRDS("counts.RDS")
+#options(repos = BiocInstaller::biocinstallRepos())
 
 server <- function(input, output) {
-  output$counts <- renderPlot(ggplot(plotCounts(dds, gene=input$Gene, intgroup = "Organ", returnData = T), aes(x=Organ, y=count)) + 
-                                geom_boxplot(aes(color=Organ)) + geom_point() + facet_grid(.~dds$CD69facet) +
+  output$counts <- renderPlot(ggplot(counts, aes(x=Organ, y=value)) + 
+                                geom_boxplot(aes(color=Organ)) + geom_point() + facet_grid(~CD69facet) +
                                 theme(axis.text.x = element_blank(),
                                       axis.title.x = element_blank(),
                                       axis.ticks = element_blank(),

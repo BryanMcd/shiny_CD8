@@ -5,8 +5,11 @@ counts <- readRDS("counts.RDS")
 #options(repos = BiocInstaller::biocinstallRepos())
 
 server <- function(input, output) {
-  output$counts <- renderPlot(ggplot(counts, aes(x=Organ, y=value)) + 
-                                geom_boxplot(aes(color=Organ)) + geom_point() + facet_grid(~CD69facet) +
+  output$counts <- renderPlot(ggplot(counts[grepl(input$Gene, counts$variable),], 
+                                     aes(x=Organ, y=value)) + 
+                                geom_boxplot(aes(color=Organ)) + 
+                                geom_point() + 
+                                facet_grid(.~CD69facet) +
                                 theme(axis.text.x = element_blank(),
                                       axis.title.x = element_blank(),
                                       axis.ticks = element_blank(),

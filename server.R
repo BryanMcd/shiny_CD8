@@ -1,4 +1,5 @@
 load("dds.rdata")
+library(shiny)
 library(DESeq2)
 library(ggplot2)
 options(repos = BiocInstaller::biocinstallRepos())
